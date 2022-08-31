@@ -12,7 +12,7 @@
 
     </head>
     <body class="bg-blue-200">
-        <div id="app" class="flex justify-center pt-16">
+        <div id="app" class="flex justify-center pt-5">
             <weather-app></weather-app>
         </div>
     </body>

@@ -28,24 +28,55 @@
           ></canvas>
     </div>
   </div>
+  <form action="#">
+    <div class="flex justify-center gap-2 flex-end">
+      <input type="checkbox" id="details" class="rounded" @click="changeFlag">
+      <label for="details">Detailed Weather</label>
+    </div>
+  </form>
+
+  <template v-if=flag>
+    <daily />
+  </template>
+
+  <template v-else>
+    <day-weather :day="day"></day-weather>
+  </template>
 </template>
 
 <script>
+import DayWeather from './DayWeather.vue';
+import Daily from './Daily.vue';
+
 export default {
   name: "CurrentWeather",
   mounted() {
     this.fetchIcons();
   },
+  data(){
+    return {
+      flag: false,
+    };
+  },
+  components :{
+    DayWeather,
+    Daily,
+  },
   props: {
     currentTemperature: Object,
     location: Object,
+    day: Object,
   },
   methods: {
     fetchIcons(){
       var skycons = new Skycons({ color: "white" });
       skycons.add("iconCurrent", this.currentTemperature.icon);
       skycons.play();
-    }
+    },
+    changeFlag(){
+      this.flag = !this.flag;
+      console.log(this.flag);
+    },
   }
 };
 </script>

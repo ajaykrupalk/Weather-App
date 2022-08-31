@@ -1,16 +1,31 @@
 <template>
-  <div class="font-sans w-128 max-w-lg overflow-hidden rounded-lg bg-gray-900 shadow-lg mt-4">
-    <CurrentWeather :currentTemperature="currentTemperature" :location="location"/>
-    <FutureWeather :getIcons="getIcons" :daily="daily"/>
+  <div
+    class="
+      font-sans
+      w-128
+      max-w-lg
+      overflow-hidden
+      rounded-lg
+      bg-gray-900
+      shadow-lg
+      mt-4
+    "
+  >
+    <CurrentWeather
+      :currentTemperature="currentTemperature"
+      :location="location"
+      :day="day"
+    />
+    <FutureWeather :getIcons="getIcons" :daily="daily" />
   </div>
 </template>
 
 <script>
-import CurrentWeather from './CurrentWeather.vue';
-import FutureWeather from './FutureWeather.vue';
+import CurrentWeather from "./CurrentWeather.vue";
+import FutureWeather from "./FutureWeather.vue";
 
 export default {
-  mounted(){
+  mounted() {
     this.fetchLocation();
     this.fetchData();
   },
@@ -21,8 +36,13 @@ export default {
         lat: 12.9716,
         lon: 77.5946,
       },
-      indice: 8,
+      indice: 7,
       daily: [],
+      day: {
+        temps: [],
+        time: [],
+        icons: [],
+      },
       currentTemperature: {
         actual: "",
         feelsLike: "",
@@ -36,8 +56,8 @@ export default {
       fetch(`/api/location`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-          this.location.name = data.geoplugin_city+", " + data.geoplugin_regionName;
+          this.location.name =
+            data.geoplugin_city + ", " + data.geoplugin_regionName;
           this.location.lat = data.geoplugin_latitude;
           this.location.lon = data.geoplugin_longitude;
         });
@@ -61,16 +81,26 @@ export default {
 
           while (this.indice < data.list.length) {
             this.daily.push(data.list[this.indice]);
-            this.indice += 8;
+            this.indice += 7;
           }
+
+          this.indice = 0;
+          while (this.indice < 9) {
+            this.day.temps.push(data.list[this.indice].main.temp);
+            this.day.time.push(data.list[this.indice].dt);
+            this.day.icons.push(data.list[this.indice].weather[0].icon);
+            this.indice += 1;
+          }
+
+          console.log(this.day.icons);
 
           skycons.add("iconCurrent", this.currentTemperature.icon);
           skycons.play();
+
+          return data;
         });
     },
     getIcons(string) {
-      console.log(string);
-      
       const d = new Date();
       let hour = d.getHours();
       if (string === "clear sky") {

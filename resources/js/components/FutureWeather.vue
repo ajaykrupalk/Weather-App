@@ -35,9 +35,6 @@
 <script>
 export default {
   name: 'FutureWeather',
-  // mounted(){
-  //   this.getdayIcon();
-  // },
   props: {
     daily: Array,
     getIcons: Function,

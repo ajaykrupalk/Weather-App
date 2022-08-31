@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Temperature;
+use App\Http\Controllers\TemperatureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//all temperatures from the database
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', [
+        'temperatures' => Temperature::all(),
+    ]);
 });
+
+Route::get('/fetch', [TemperatureController::class, 'fetch']);

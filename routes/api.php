@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Temperature;
 use Zttp\Zttp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -38,4 +39,8 @@ Route::get('/weather',function(){
     // $response = Http::get("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lng&units=metric&appid=$apiKey");
 
     return $response->json();
+});
+
+Route::get('/days', function(){
+    return Temperature::all();
 });
