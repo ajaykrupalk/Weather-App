@@ -28,6 +28,7 @@
           ></canvas>
     </div>
   </div>
+  
   <form action="#">
     <div class="flex justify-center gap-2 flex-end">
       <input type="checkbox" id="details" class="rounded" @click="changeFlag">
@@ -35,11 +36,11 @@
     </div>
   </form>
 
-  <template v-if=flag>
-    <daily />
+  <template v-if="flag" >
+    <Daily  />
   </template>
 
-  <template v-else>
+  <template  v-else>
     <day-weather :day="day"></day-weather>
   </template>
 </template>

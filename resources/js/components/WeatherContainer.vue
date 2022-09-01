@@ -117,7 +117,7 @@ export default {
         return "rain";
       } else if (string === "snow") {
         return "snow";
-      } else if (string === "rain" || string === "thunderstorm") {
+      } else if (string === "rain" || string === "thunderstorm" || string === "heavy intensity rain") {
         return "sleet";
       } else if (string === "wind") {
         return "wind";

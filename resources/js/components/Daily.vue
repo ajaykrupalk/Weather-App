@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-wrap justify-center gap-5 p-3">
     <template v-for="(temp, index) in temps" :key="index">
-      <template v-if="temp.cur_date > date">
+      <template v-if="compareDate(temp.cur_date, date)">
         <div class="flex gap-5 rounded p-2 bg-gray-500 text-white">
           <div class="flex-col">
             <p class="text-sm">{{ getDay(temp.cur_date) }}</p>
@@ -65,11 +65,19 @@ export default {
     getTime(timestamp) {
       const day = new Date(timestamp);
 
-      const date = (day.getHours() < 10 ? "0" : "") +
-        day.getHours() + ":" + (day.getMinutes() < 10 ? "0" : "") +
+      const date =
+        (day.getHours() < 10 ? "0" : "") +
+        day.getHours() +
+        ":" +
+        (day.getMinutes() < 10 ? "0" : "") +
         day.getMinutes();
       return date;
     },
+    compareDate(d1,d2){
+      const date1 = new Date(d1);
+      const date2 = new Date(d2);
+      return date1.getTime() >= date2.getTime();
+    }
   },
 };
 </script>

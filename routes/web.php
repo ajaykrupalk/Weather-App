@@ -19,7 +19,7 @@ use App\Http\Controllers\TemperatureController;
 Route::get('/', function () {
     return view('welcome', [
         'temperatures' => Temperature::all(),
-    ]);
+    ], [TemperatureController::class, 'fetch']);
 });
 
 Route::get('/fetch', [TemperatureController::class, 'fetch']);

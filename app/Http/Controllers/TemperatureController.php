@@ -15,10 +15,12 @@ class TemperatureController extends Controller
         for($x = 0; $x < count($temperatures->list); $x++) {
             $temperature = new Temperature;
             $date = date("Y-m-d H:i:s",$temperatures->list[$x]->dt);
-            $temperature->cur_date = $date;
-            $temperature->cur_temp = $temperatures->list[$x]->main->temp;
-            $temperature->icon = $temperatures->list[$x]->weather[0]->icon;
-            $temperature->save();
+            if(Temperature::where('cur_date', $date)->doesntExist()) {
+                $temperature->cur_date = $date;
+                $temperature->cur_temp = $temperatures->list[$x]->main->temp;
+                $temperature->icon = $temperatures->list[$x]->weather[0]->icon;
+                $temperature->save();
+            }
         }
         return "DONE";
     }
