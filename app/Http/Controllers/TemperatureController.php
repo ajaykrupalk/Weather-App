@@ -10,7 +10,12 @@ class TemperatureController extends Controller
     //
     public function fetch()
     {
-        $response = Http::get("https://api.openweathermap.org/data/2.5/forecast?lat=12.9716&lon=77.5946&units=metric&appid=f92d3f9b489e383709de5eefbd3d9f59");
+        $response = Http::get("http://www.geoplugin.net/json.gp?ip=xx.xx.xx.xx");
+        $location = $response->json();
+        $latitude = $location['geoplugin_latitude'];
+        $longitude = $location['geoplugin_longitude'];
+
+        $response = Http::get("https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&units=metric&appid=f92d3f9b489e383709de5eefbd3d9f59");
         $temperatures = json_decode($response->body());
         for($x = 0; $x < count($temperatures->list); $x++) {
             $temperature = new Temperature;
@@ -22,6 +27,7 @@ class TemperatureController extends Controller
                 $temperature->save();
             }
         }
-        return "DONE";
+        // return "Done";
+        return redirect('/home');
     }
 }

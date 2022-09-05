@@ -15,11 +15,16 @@ use App\Http\Controllers\TemperatureController;
 |
 */
 
+//fetch from api and store to database and then retrieve
+Route::get('/', [TemperatureController::class, 'fetch']);
+
 //all temperatures from the database
-Route::get('/', function () {
+Route::get('/home', function () {
     return view('welcome', [
         'temperatures' => Temperature::all(),
-    ], [TemperatureController::class, 'fetch']);
+    ]);
 });
 
-Route::get('/fetch', [TemperatureController::class, 'fetch']);
+
+
+// Route::get('/fetch', [TemperatureController::class, 'fetch']);
